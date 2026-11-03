@@ -3,9 +3,11 @@
  * @brief Constants used throughout codebase.
  * @author Cameron Hannay
  */
+
+// Corrected by Jacob Lancaster
+
 #include "include.h"
 
-// TODO: Add in more documentation/comments since Old Jim forgot
 
 const uint32_t UNDEFINED;
 
@@ -50,101 +52,147 @@ const struct instruction_definition instruction_definitions[] = {
 
     //TODO: Fix the bugs in the other instructions to restore functionality
 
+    // Instruction Type was I_Type, corrected to be R-Type
+    // Opcode was 00100, corrected to be 000000
     {
         "AND",
-        I_TYPE,
+        R_TYPE,
         "001000",
         "100100",
         { RD, RS, RT, EMPTY }
     },
 
+
+    // Instruction Type was R_Type, corrected to be R_Type
     {
         "ANDI",
-        R_TYPE,
+        I_TYPE,
         "001100",
         NULL,
         { RS, RT, IMM, EMPTY }
     },
 
+
+    // Instruction Type was R_Type, corrected to be I_Type
+    // Opcode was 000000, corrected to be 000100
+    // Funct Code was 000100, corrected to be NULL
     {
         "BEQ",
-        R_TYPE,
-        "000000",
+        I_TYPE,
         "000100",
+        NULL,
         { RS, RT, IMM, EMPTY }
     },
 
+    // Registers were {RS, EMPTY, EMPTY, EMPTY}, corrected to { RS, RT, EMPTY, EMPTY }
     {
         "DIV",
         R_TYPE,
         "000000",
         "011010",
-        { RS, EMPTY, EMPTY, EMPTY }
+        { RS, RT, EMPTY, EMPTY }
     },
 
+    // Registers were { RS, IMM, EMPTY, EMPTY }, corrected to { RT, IMM, EMPTY, EMPTY }
     {
         "LUI",
         I_TYPE,
         "001111",
         NULL,
-        { RS, IMM, EMPTY, EMPTY }
+        { RT, IMM, EMPTY, EMPTY }
     },
 
+    // Instruction Type was R_Type, corrected to I_Type
+    // Registers were { RS, IMM, RT, EMPTY }, corrected to { RT, IMM, RS, EMPTY }
     {
         "LW",
-        R_TYPE,
+        I_TYPE,
         "100011",
         NULL,
-        { RS, IMM, RT, EMPTY }
+        { RT, IMM, RS, EMPTY }
     },
 
+    // Funct Code was 010010, corrected to be 010000
+    // Registers were { RS, EMPTY, EMPTY, EMPTY }, corrected to be { RD, EMPTY, EMPTY, EMPTY }
     {
         "MFHI",
-        R_TYPE,
-        "000000",
-        "010010",
-        { RS, EMPTY, EMPTY, EMPTY }
-    },
-
-    {
-        "MFLO",
         R_TYPE,
         "000000",
         "010000",
         { RS, EMPTY, EMPTY, EMPTY }
     },
 
+    // Funct Code was 010000, corrected to be 010010
+    // Registers were { RS, EMPTY, EMPTY, EMPTY }, corrected to be { RD, EMPTY, EMPTY, EMPTY }
+    {
+        "MFLO",
+        R_TYPE,
+        "000000",
+        "010010",
+        { RD, EMPTY, EMPTY, EMPTY }
+    },
+
+    // Opcode was 001101, corrected to be 000000
+    // Funct Code was 000000, corrected to be 100101
     {
         "OR",
         R_TYPE,
-        "001101",
         "000000",
+        "100101",
         { RD, RS, RT, EMPTY }
     },
 
+    // Funct Code was 101011, corrected to 101010 (since it's signed)
+    // Registers were { RD, RT, RS, EMPTY }, corrected to be { RD, RS, RT, EMPTY }
     {
         "SLT",
         R_TYPE,
         "000000",
-        "101011",
+        "101010",
         { RD, RT, RS, EMPTY }
     },
 
+    // Opcode was 100010, corrected to 000000
+    // Funct Code was 000000, corrected to 100010
+    // Registers were { EMPTY, RS, RT, EMPTY }, corrected to be { RD, RS, RT, EMPTY }
     {
         "SUB",
         R_TYPE,
-        "100010",
         "000000",
-        { EMPTY, RS, RT, EMPTY }
+        "100010",
+        { RD, RS, RT, EMPTY }
     },
 
+    // Opcode was 100011, corrected to 101011
     {
         "SW",
         I_TYPE,
-        "100011",
+        "101011",
         NULL,
         { RS, IMM, RT, EMPTY }
-    }
+    },
     
-    // TODO: Implement MULT, ORI, and SLTI instructions once bugs are fixed
+    {
+        "MULT",
+        R_TYPE,
+        "000000",
+        "011000",
+        { RS, RT, EMPTY, EMPTY }
+    },
+
+    {
+        "ORI",
+        I_TYPE,
+        "001101",
+        NULL,
+        { RT, RS, IMM, EMPTY }
+    },
+
+    {
+        "SLTI",
+        I_TYPE,
+        "001010",
+        NULL,
+        { RT, RS, IMM, EMPTY }
+    }
 };
