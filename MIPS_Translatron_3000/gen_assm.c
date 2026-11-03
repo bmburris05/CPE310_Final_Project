@@ -4,7 +4,7 @@
  * @author Cameron Hannay
 
  */
- // Corrected by Jacob Lancaster
+ // Commented by Jacob Lancaster
 
 #include "include.h"
 
