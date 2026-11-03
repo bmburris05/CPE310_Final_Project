@@ -69,14 +69,19 @@ uint32_t parse_assembly(char* line, char** error)
         // pound sign indicates an immediate value
         if (token[0] == '#')
         {
+            // record this argument's type in result struct
             result.types[arg] = IMMEDIATE;
+
             remove_pound(token);
-            char* end_ptr;
+            char* end_ptr;          // pointer to next char after the last numeric char
             
+            /* use union 'trick' and strtol to get unsigned version of the immediate's value, 
+                then store in result's argument array */
 	        union signedness_switch_trick signedness;
             signedness.i = (int16_t) strtol(token, &end_ptr, 10);
             result.vals[arg] = signedness.u;
 
+            // if ptr isn't at the end (\0), there are invalid character(s) in the immediate
             if(end_ptr == token || *end_ptr != '\0')
             {
                 *error = "Improperly formatted immediate.";
@@ -88,8 +93,13 @@ uint32_t parse_assembly(char* line, char** error)
         // dollar sign indicates a register
         else if (token[0] == '$')
         {
+            // record this argument's type in result struct
             result.types[arg] = REGISTER;
+
+            // call lookup function to find specific register and record in struct
             result.vals[arg] = reg_lookup(token, error);
+
+            // if an error is recorded in reg_lookup, the reg type is invalid
             if (*error != NULL) {
                 free(opp_name);
                 opp_name = NULL;
@@ -104,6 +114,7 @@ uint32_t parse_assembly(char* line, char** error)
             opp_name = NULL;
             return UNDEFINED; 
         }
+        
         // advance to next argument string
         token = strtok(NULL, ",");
     }
@@ -114,8 +125,10 @@ uint32_t parse_assembly(char* line, char** error)
         result.vals[arg] = UNDEFINED;
     }
 
+    // use the created result struct to convert instruction to machine code
     uint32_t new_val = convert_to_machine_code(result, error);
     
+    // final garbage collection
     free(opp_name);
     opp_name = NULL;
 
