@@ -4,6 +4,10 @@
  * @author Cameron Hannay
  */
 
+// Moved initialization of line buffer size constant to util header file so it could be 
+//    accessed in both main.c and util.c during compilation
+#define LINE_BUFF_SIZE 4096
+
 /**
  * @brief Converts a string containing an unsigned binary number into an integer.
  * @param binary A string containing an unsigned binary number that can be represented with 32 bits.
@@ -16,7 +20,6 @@ uint32_t bin_to_num(char *binary);
  */
 extern const uint32_t ARG_AUTO;
 extern const uint32_t ARG_REVERSE;
-extern const uint32_t LINE_BUFF_SIZE;
 
 /**
  * @brief Handle command line args

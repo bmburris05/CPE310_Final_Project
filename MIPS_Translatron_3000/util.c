@@ -28,8 +28,6 @@ uint32_t bin_to_num(char *binary)
 const uint32_t ARG_AUTO 	= 1;
 const uint32_t ARG_REVERSE	= 2;
 
-const uint32_t LINE_BUFF_SIZE = 4096;
-
 // Reads command-line arguments to identify program flags and input/output filenames
 uint32_t command_line_args(int argc, char *argv[], char** in_filename, char** out_filename)
 {
