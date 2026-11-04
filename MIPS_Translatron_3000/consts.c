@@ -50,28 +50,25 @@ const struct instruction_definition instruction_definitions[] = {
         { RS, RT, IMM, EMPTY }
     },
 
-    //TODO: Fix the bugs in the other instructions to restore functionality
-
     // Instruction Type was I_Type, corrected to be R-Type
     // Opcode was 00100, corrected to be 000000
     {
         "AND",
         R_TYPE,
-        "001000",
+        "000000",
         "100100",
         { RD, RS, RT, EMPTY }
     },
 
-
-    // Instruction Type was R_Type, corrected to be R_Type
+    // Instruction Type was R_Type, corrected to be I_Type
+    // Registers were { RS, RT, IMM, EMPTY }, corrected to { RT, RS, IMM, EMPTY }
     {
         "ANDI",
         I_TYPE,
         "001100",
         NULL,
-        { RS, RT, IMM, EMPTY }
+        { RT, RS, IMM, EMPTY }
     },
-
 
     // Instruction Type was R_Type, corrected to be I_Type
     // Opcode was 000000, corrected to be 000100
@@ -119,7 +116,7 @@ const struct instruction_definition instruction_definitions[] = {
         R_TYPE,
         "000000",
         "010000",
-        { RS, EMPTY, EMPTY, EMPTY }
+        { RD, EMPTY, EMPTY, EMPTY }
     },
 
     // Funct Code was 010000, corrected to be 010010
@@ -149,7 +146,7 @@ const struct instruction_definition instruction_definitions[] = {
         R_TYPE,
         "000000",
         "101010",
-        { RD, RT, RS, EMPTY }
+        { RD, RS, RT, EMPTY }
     },
 
     // Opcode was 100010, corrected to 000000
@@ -164,14 +161,16 @@ const struct instruction_definition instruction_definitions[] = {
     },
 
     // Opcode was 100011, corrected to 101011
+    // Registers were { RS, IMM, RT, EMPTY }, corrected to be { RT, IMM, RS, EMPTY }
     {
         "SW",
         I_TYPE,
         "101011",
         NULL,
-        { RS, IMM, RT, EMPTY }
+        { RT, IMM, RS, EMPTY }
     },
     
+    // MULT instruction added
     {
         "MULT",
         R_TYPE,
@@ -180,6 +179,7 @@ const struct instruction_definition instruction_definitions[] = {
         { RS, RT, EMPTY, EMPTY }
     },
 
+    // ORI instruction added
     {
         "ORI",
         I_TYPE,
@@ -188,6 +188,7 @@ const struct instruction_definition instruction_definitions[] = {
         { RT, RS, IMM, EMPTY }
     },
 
+    // SLTI instruction added
     {
         "SLTI",
         I_TYPE,
