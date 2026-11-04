@@ -6,7 +6,6 @@
 
 #include "include.h"
 
-// TODO: Add in documentation/comments since Old Jim forgot
 
 int main(int argc, char *argv[])
 {
@@ -16,8 +15,9 @@ int main(int argc, char *argv[])
 	uint32_t flags;
 	flags = command_line_args(argc, argv, &in_filename, &out_filename);
 
-	enum InteractiveState int_state;
+	enum InteractiveState int_state;		// Indicates which mode the assembler is in
 
+	// If auto flag is set, set state to INACTIVE. Otherwise, set state to ROOT
 	if (flags & ARG_AUTO) {
 		int_state = INACTIVE;
 	}
@@ -30,8 +30,11 @@ int main(int argc, char *argv[])
 	// Create empty file pointer for reading in
 	FILE* in_file = NULL;
 
+	// Continuous loop to perform all necessary steps to translate the given instructions
 	while (1) {
+		// Declare necessary data structures to hold results
 		char line[LINE_BUFF_SIZE];
+		// Intakes next instruction line and changes assembler mode based on user selection
 		get_next_input(line, &int_state, flags, in_filename, &in_file);
 		char* error = NULL;
 		char* end;
@@ -39,6 +42,8 @@ int main(int argc, char *argv[])
 		uint32_t inst_in;
 		uint32_t result;
 		char decompile_result[LINE_BUFF_SIZE];
+
+		// Perform different conversions based on selected assembler mode and output results
 		switch (int_state) {
 			case ASM_TO_MACH:
 				// Call conversion from assembly to binary
